@@ -17,4 +17,18 @@ public class UserAuthentication extends Database {
 
         return null;
     }
+
+    public boolean validateToken(String token) {
+
+        return false;
+    }
+
+    public void createToken(String username) {
+
+    }
+
+    public void destroyToken(String token) {
+
+    }
+
 }
