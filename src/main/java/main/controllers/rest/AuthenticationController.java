@@ -16,24 +16,24 @@ public class AuthenticationController {
         /**
          * Todo: Verify user and return an appropriate response
          */
+        String token = "";
+
         if (username.length() == 0 || password.length() == 0) {
+
             return new AuthenticationResponse("Lozinka i korisničko ime su obavezna polja.", "Error: Missing fields");
         }
 
+
         UserAuthentication userAuthentication = new UserAuthentication();
-        userAuthentication.validateUser(username, password);
-        userAuthentication.close();
+        if (userAuthentication.validateUser(username, password) == 1) {
+            token = userAuthentication.createToken(username);
+            userAuthentication.close();
+            if (token != "") {
+                return new AuthenticationResponse(token, "Success");
+            }
+        }
 
-
-        /*MySQLAccess dao = new MySQLAccess();
-        try {
-            dao.readDataBase();
-
-        }catch (Exception e){
-
-        }*/
-
-        return new AuthenticationResponse("", "");
+        return new AuthenticationResponse("Neispravna lozinka ili korisničko ime", "Error: Incorrect username or password");
     }
 
 
