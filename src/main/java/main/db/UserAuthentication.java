@@ -43,7 +43,6 @@ public class UserAuthentication extends Database {
 
     public String createToken(String username) {
         String token = new HashService().generateToken();
-        System.out.println("Generated ::::::" + token);
         try {
             String sql = "UPDATE Users SET token = ? WHERE Users.name = ?";
             this.preparedStatement = this.connect.prepareStatement(sql);
