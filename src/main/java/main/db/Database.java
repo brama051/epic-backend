@@ -7,38 +7,36 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class Database {
-    private Connection connect = null;
-    private Statement statement = null;
-    private PreparedStatement preparedStatement = null;
-    private ResultSet resultSet = null;
+    public Connection connect = null;
+    public Statement statement = null;
+    public PreparedStatement preparedStatement = null;
+    public ResultSet resultSet = null;
 
     public Database() {
         try {
             // This will load the MySQL driver, each DB has its own driver
             Class.forName("com.mysql.jdbc.Driver");
             // Setup the connection with the DB
-            connect = DriverManager
+            this.connect = DriverManager
                     .getConnection("jdbc:mysql://sql7.freemysqlhosting.net/sql7152891?"
                             + "user=sql7152891&password=2lfGA3yCas");
         } catch (Exception e) {
             System.out.print(e);
-        } finally {
-            close();
         }
     }
 
-    private void close() {
+    public void close() {
         try {
             if (resultSet != null) {
-                resultSet.close();
+                this.resultSet.close();
             }
 
             if (statement != null) {
-                statement.close();
+                this.statement.close();
             }
 
             if (connect != null) {
-                connect.close();
+                this.connect.close();
             }
         } catch (Exception e) {
             System.out.print(e);
