@@ -21,7 +21,7 @@ public class Database {
                     .getConnection("jdbc:mysql://sql7.freemysqlhosting.net/sql7152891?"
                             + "user=sql7152891&password=2lfGA3yCas");
         } catch (Exception e) {
-            System.out.print(e);
+            System.out.println(e.toString());
         }
     }
 
@@ -39,7 +39,7 @@ public class Database {
                 this.connect.close();
             }
         } catch (Exception e) {
-            System.out.print(e);
+            System.out.println(e.toString());
         }
     }
 
