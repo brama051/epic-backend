@@ -41,8 +41,24 @@ public class UserAuthentication extends Database {
         return false;
     }
 
-    public void createToken(String username) {
+    public String createToken(String username) {
+        String token = new HashService().generateToken();
+        System.out.println("Generated ::::::" + token);
+        try {
+            String sql = "UPDATE Users SET token = ? WHERE Users.name = ?";
+            this.preparedStatement = this.connect.prepareStatement(sql);
+            this.preparedStatement.setString(1, token);
+            this.preparedStatement.setString(2, username);
+            this.preparedStatement.executeUpdate();
 
+            return token;
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+
+
+        return "";
     }
 
     public void destroyToken(String token) {
