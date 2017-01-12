@@ -20,3 +20,5 @@ API Explanation
     /sequences (GET | token)
     /sequences/page (GET | token, page, itemsPerPage, filter )
 
+##Todo:
+* /sequences/page should also return total pages, current page and the filter used 
