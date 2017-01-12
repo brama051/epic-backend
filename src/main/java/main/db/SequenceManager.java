@@ -62,4 +62,32 @@ public class SequenceManager extends Database {
 
     }
 
+    public SequenceList getSequencePage(int page, int itemsPerPage, String filter) {
+        SequenceList sequenceList = new SequenceList();
+        try {
+            String sql = "SELECT * FROM Sequences WHERE Sequences.by_user LIKE ? OR Sequences.purpose LIKE ?";
+            this.preparedStatement = this.connect.prepareStatement(sql);
+            this.preparedStatement.setString(1, filter);
+            this.preparedStatement.setString(2, filter);
+
+            this.resultSet = this.preparedStatement.executeQuery();
+
+            while (this.resultSet.next()) {
+                Sequence sequence = new Sequence();
+                sequence.setSequenceNumber(this.resultSet.getLong("sequence_number"));
+                sequence.setByUser(this.resultSet.getString("by_user"));
+                sequence.setPurpose(this.resultSet.getString("purpose"));
+                sequence.setDate(this.resultSet.getDate("date"));
+                sequenceList.addSequence(sequence);
+            }
+
+            return sequenceList;
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return null;
+        }
+
+    }
+
 }
