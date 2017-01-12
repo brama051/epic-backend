@@ -65,10 +65,12 @@ public class SequenceManager extends Database {
     public SequenceList getSequencePage(int page, int itemsPerPage, String filter) {
         SequenceList sequenceList = new SequenceList();
         try {
-            String sql = "SELECT * FROM Sequences WHERE Sequences.by_user LIKE ? OR Sequences.purpose LIKE ?";
+            String sql = "SELECT * FROM Sequences WHERE Sequences.by_user LIKE ? OR Sequences.purpose LIKE ? LIMIT ? OFFSET ?";
             this.preparedStatement = this.connect.prepareStatement(sql);
-            this.preparedStatement.setString(1, filter);
-            this.preparedStatement.setString(2, filter);
+            this.preparedStatement.setString(1, "%" + filter + "%");
+            this.preparedStatement.setString(2, "%" + filter + "%");
+            this.preparedStatement.setInt(3, itemsPerPage);
+            this.preparedStatement.setInt(4, (page - 1) * itemsPerPage);
 
             this.resultSet = this.preparedStatement.executeQuery();
 
