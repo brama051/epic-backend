@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RestController
@@ -92,5 +93,35 @@ public class SequenceController {
         }
 
     }
+
+    @RequestMapping(value = "/sequence/request", method = RequestMethod.POST)
+    public Sequence requestSequence(@RequestParam(value = "token", defaultValue = "") String token) {
+        //Token validation
+        UserAuthentication userAuthentication = new UserAuthentication();
+        String username = userAuthentication.getUserByToken(token);
+        if (username == "") {
+            return null;
+        } else {
+            SequenceManager sequenceManager = new SequenceManager();
+            Long nextAvailableSequenceNumber = sequenceManager.getNextAvailableSequenceNumber();
+            return new Sequence(nextAvailableSequenceNumber, username, "", new Date());
+        }
+    }
+
+    @RequestMapping(value = "/sequence/", method = RequestMethod.DELETE)
+    public String deleteSequence(@RequestParam(value = "token", defaultValue = "") String token,
+                                 @RequestParam(value = "sequenceNumber", defaultValue = "0") Long sequenceNumber) {
+
+        UserAuthentication userAuthentication = new UserAuthentication();
+        String username = userAuthentication.getUserByToken(token);
+        if (username == "") {
+            return null;
+        } else {
+            SequenceManager sequenceManager = new SequenceManager();
+            sequenceManager.deleteSequence(sequenceNumber);
+            return
+        }
+    }
+
 
 }
