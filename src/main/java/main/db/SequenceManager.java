@@ -83,9 +83,22 @@ public class SequenceManager extends Database {
         }
     }
 
-    public void updateSequence(Sequence sequence) {
+    /*public void updateSequence(Sequence sequence) {
+        try {
+            String sql = "UPDATE Sequences SET  WHERE Users.name = ?";
+            this.preparedStatement = this.connect.prepareStatement(sql);
+            this.preparedStatement.setLong(1, sequence.getSequenceNumber());
+            this.preparedStatement.setString(2, sequence.getByUser());
+            this.preparedStatement.setString(3, sequence.getPurpose());
+            this.preparedStatement.setDate(4, new java.sql.Date(sequence.getDate().getTime()));
 
-    }
+            this.preparedStatement.executeUpdate();
+            return sequence;
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }*/
 
     public String deleteSequence(Long sequenceNumber) {
         try {
