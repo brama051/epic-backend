@@ -87,8 +87,18 @@ public class SequenceManager extends Database {
 
     }
 
-    public void deleteSequence(Sequence sequence) {
+    public String deleteSequence(Long sequenceNumber) {
+        try {
+            String sql = "DELETE FROM Sequences WHERE Sequences.sequence_number = ? LIMIT 1";
+            this.preparedStatement = this.connect.prepareStatement(sql);
+            this.preparedStatement.setLong(1, sequenceNumber);
+            // It should delete a single row and return "1"
+            return String.valueOf(this.preparedStatement.executeUpdate());
 
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return "";
     }
 
 
