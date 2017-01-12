@@ -29,7 +29,7 @@ public class AuthenticationController {
             token = userAuthentication.createToken(username);
             userAuthentication.close();
             if (token != "") {
-                return new AuthenticationResponse(token, "Success");
+                return new AuthenticationResponse(token, "Success: Login");
             }
         }
 
@@ -42,15 +42,12 @@ public class AuthenticationController {
         /**
          * Todo: Destroy user token
          */
-        /*MySQLAccess dao = new MySQLAccess();
-        try {
-            dao.readDataBase();
+        UserAuthentication userAuthentication = new UserAuthentication();
+        if (userAuthentication.logoutUser(token) == 0) {
+            return new AuthenticationResponse("Uspješna odjava", "Success: Logout");
+        }
 
-        }catch (Exception e){
-
-        }*/
-
-        return new AuthenticationResponse("", "");
+        return new AuthenticationResponse("", "Error");
     }
 
 
