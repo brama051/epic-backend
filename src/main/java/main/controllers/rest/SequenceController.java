@@ -17,9 +17,11 @@ public class SequenceController {
 
     @RequestMapping("/sequence")
     public Sequence getSequence(@RequestParam(value = "token", defaultValue = "") String token, @RequestParam(value = "sequenceNumber", defaultValue = "") Long sequenceNumber) {
-        /**
-         * Todo: Validate token first
-         */
+        //Token validation
+        UserAuthentication userAuthentication = new UserAuthentication();
+        if (userAuthentication.getUserByToken(token) == "") {
+            return null;
+        }
 
         SequenceManager sequenceManager = new SequenceManager();
         Sequence sequence = sequenceManager.getSequence(sequenceNumber);
@@ -30,9 +32,11 @@ public class SequenceController {
 
     @RequestMapping("/sequences")
     public SequenceList getSequenceList(@RequestParam(value = "token", defaultValue = "") String token) {
-        /**
-         * Todo: Validate token first
-         */
+        //Token validation
+        UserAuthentication userAuthentication = new UserAuthentication();
+        if (userAuthentication.getUserByToken(token) == "") {
+            return null;
+        }
 
         SequenceListManager sequenceListManager = new SequenceListManager();
         SequenceList sequenceList = sequenceListManager.getSequenceList();
@@ -46,9 +50,11 @@ public class SequenceController {
                                         @RequestParam(value = "page", defaultValue = "1") int page,
                                         @RequestParam(value = "itemsPerPage", defaultValue = "1") int itemsPerpage,
                                         @RequestParam(value = "filter", defaultValue = "") String filter) {
-        /**
-         * Todo: Validate token first
-         */
+        //Token validation
+        UserAuthentication userAuthentication = new UserAuthentication();
+        if (userAuthentication.getUserByToken(token) == "") {
+            return null;
+        }
 
         SequenceListManager sequenceListManager = new SequenceListManager();
         SequenceList sequenceList = sequenceListManager.getSequenceListPage(page, itemsPerpage, filter);
@@ -63,9 +69,7 @@ public class SequenceController {
                                    @RequestParam(value = "by_user", defaultValue = "") String by_user,
                                    @RequestParam(value = "purpose", defaultValue = "") String purpose,
                                    @RequestParam(value = "date", defaultValue = "") Date date) {
-        /**
-         * Todo: Validate token first
-         */
+        //Token validation
         UserAuthentication userAuthentication = new UserAuthentication();
         if (userAuthentication.getUserByToken(token) == "") {
             return null;
