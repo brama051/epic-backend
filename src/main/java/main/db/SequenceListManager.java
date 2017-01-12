@@ -54,12 +54,40 @@ public class SequenceListManager extends Database {
                 sequenceList.addSequence(sequence);
             }
 
+            //Inserting page stat metrics
+            sequenceList.totalPages = this.totalPages(itemsPerPage, filter);
+            sequenceList.filter = filter;
+            sequenceList.currentPage = page;
+            sequenceList.itemsPerPage = itemsPerPage;
+
             return sequenceList;
 
         } catch (Exception e) {
             System.out.println(e.toString());
             return null;
         }
+    }
+
+    private int totalPages(int itemsPerPage, String filter) {
+        int count = 0;
+        try {
+            String sql = "SELECT COUNT(*) as 'Count' FROM Sequences WHERE Sequences.by_user LIKE ? OR Sequences.purpose LIKE ?";
+            this.preparedStatement = this.connect.prepareStatement(sql);
+            this.preparedStatement.setString(1, "%" + filter + "%");
+            this.preparedStatement.setString(2, "%" + filter + "%");
+
+            this.resultSet = this.preparedStatement.executeQuery();
+
+            while (this.resultSet.next()) {
+                count = this.resultSet.getInt("Count");
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+
+        return (int) Math.floor(((double) count / (double) itemsPerPage)) + 1;
 
     }
+
+
 }

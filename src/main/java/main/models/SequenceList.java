@@ -9,10 +9,19 @@ import java.util.List;
 public class SequenceList {
     public List<Sequence> list;
     public int listLength;
+    public int totalPages;
+    public int currentPage;
+    public int itemsPerPage;
+    public String filter;
+
 
     public SequenceList() {
         this.list = new ArrayList<>();
         this.listLength = 0;
+        this.totalPages = 0;
+        this.currentPage = 0;
+        this.itemsPerPage = 0;
+        this.filter = "";
     }
 
     public SequenceList(Sequence sequence) {
