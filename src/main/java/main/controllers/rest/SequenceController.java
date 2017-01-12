@@ -118,8 +118,8 @@ public class SequenceController {
             return null;
         } else {
             SequenceManager sequenceManager = new SequenceManager();
-            sequenceManager.deleteSequence(sequenceNumber);
-            return
+
+            return sequenceManager.deleteSequence(sequenceNumber);
         }
     }
 
