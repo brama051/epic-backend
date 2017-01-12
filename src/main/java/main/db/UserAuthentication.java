@@ -8,6 +8,7 @@ import java.sql.ResultSet;
  * Created by brama on 1/11/17.
  */
 public class UserAuthentication extends Database {
+
     public int validateUser(String username, String password) {
         String hashedPassword = new HashService().stringToMD5(password);
         try {
@@ -31,14 +32,23 @@ public class UserAuthentication extends Database {
         return 0;
     }
 
-    public ResultSet logoutUser(String token) {
+    public int logoutUser(String token) {
+        try {
+            String sql = "UPDATE Users SET token = '' WHERE Users.token = ?";
+            this.preparedStatement = this.connect.prepareStatement(sql);
+            this.preparedStatement.setString(1, token);
+            return this.preparedStatement.executeUpdate(); // 0 for SQL statements that returns nothing
 
-        return null;
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return -1;
+
     }
 
-    public boolean validateToken(String token) {
+    public String validateUserToken(String token) {
 
-        return false;
+        return "";
     }
 
     public String createToken(String username) {
@@ -60,9 +70,7 @@ public class UserAuthentication extends Database {
         return "";
     }
 
-    public void destroyToken(String token) {
 
-    }
 
 
 }
