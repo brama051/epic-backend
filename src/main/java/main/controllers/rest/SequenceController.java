@@ -11,19 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/rest")
 public class SequenceController {
 
-    @RequestMapping("/sequences")
-    public SequenceList getSequenceList(@RequestParam(value = "token", defaultValue = "") String token) {
-        /**
-         * Todo: Validate token first
-         */
-
-        SequenceManager sequenceManager = new SequenceManager();
-        SequenceList sequenceList = sequenceManager.getSequenceList();
-        sequenceManager.close();
-
-        return sequenceList;
-    }
-
     @RequestMapping("/sequence")
     public Sequence getSequence(@RequestParam(value = "token", defaultValue = "") String token, @RequestParam(value = "sequenceNumber", defaultValue = "") Long sequenceNumber) {
         /**
@@ -37,19 +24,32 @@ public class SequenceController {
         return sequence;
     }
 
-    @RequestMapping("/sequence")
-    public Sequence getSequencePage(@RequestParam(value = "token", defaultValue = "") String token,
-                                    @RequestParam(value = "sequenceNumber", defaultValue = "") Long sequenceNumber,
-                                    @RequestParam(value = "page", defaultValue = "1") int page,
-                                    @RequestParam(value = "itemsPerPage", defaultValue = "") int itemsPerpage) {
+    @RequestMapping("/sequences")
+    public SequenceList getSequenceList(@RequestParam(value = "token", defaultValue = "") String token) {
         /**
          * Todo: Validate token first
          */
 
         SequenceManager sequenceManager = new SequenceManager();
-        Sequence sequence = sequenceManager.getSequence(sequenceNumber);
+        SequenceList sequenceList = sequenceManager.getSequenceList();
         sequenceManager.close();
 
-        return sequence;
+        return sequenceList;
+    }
+
+    @RequestMapping("/sequences/page")
+    public SequenceList getSequencePage(@RequestParam(value = "token", defaultValue = "") String token,
+                                        @RequestParam(value = "page", defaultValue = "1") int page,
+                                        @RequestParam(value = "itemsPerPage", defaultValue = "1") int itemsPerpage,
+                                        @RequestParam(value = "filter", defaultValue = "") String filter) {
+        /**
+         * Todo: Validate token first
+         */
+
+        SequenceManager sequenceManager = new SequenceManager();
+        SequenceList sequenceList = sequenceManager.getSequencePage(page, itemsPerpage, filter);
+        sequenceManager.close();
+
+        return sequenceList;
     }
 }
