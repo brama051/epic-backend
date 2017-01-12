@@ -62,6 +62,18 @@ public class SequenceManager extends Database {
 
     }
 
+    public void createSequence(Sequence sequence) {
+
+    }
+
+    public void updateSequence(Sequence sequence) {
+
+    }
+
+    public void deleteSequence(Sequence sequence) {
+
+    }
+
     public SequenceList getSequencePage(int page, int itemsPerPage, String filter) {
         SequenceList sequenceList = new SequenceList();
         try {
