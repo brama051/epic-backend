@@ -1,6 +1,5 @@
 package main.controllers.rest;
 
-import main.db.MySQLAccess;
 import main.db.UserAuthentication;
 import main.models.AuthenticationResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
