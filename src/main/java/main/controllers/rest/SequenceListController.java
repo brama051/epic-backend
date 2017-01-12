@@ -16,7 +16,7 @@ import java.util.Date;
 @RestController
 @RequestMapping("/sequences")
 public class SequenceListController {
-    @RequestMapping("/")
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public SequenceList getSequenceList(@RequestParam(value = "token", defaultValue = "") String token) {
         //Token validation
         UserAuthentication userAuthentication = new UserAuthentication();
@@ -31,7 +31,7 @@ public class SequenceListController {
         return sequenceList;
     }
 
-    @RequestMapping("/page")
+    @RequestMapping(value = "/page", method = RequestMethod.GET)
     public SequenceList getSequencePage(@RequestParam(value = "token", defaultValue = "") String token,
                                         @RequestParam(value = "page", defaultValue = "1") int page,
                                         @RequestParam(value = "itemsPerPage", defaultValue = "1") int itemsPerpage,

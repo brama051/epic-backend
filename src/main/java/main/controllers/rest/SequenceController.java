@@ -15,7 +15,7 @@ import java.util.Date;
 @RequestMapping("/sequence")
 public class SequenceController {
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public Sequence getSequence(@RequestParam(value = "token", defaultValue = "") String token, @RequestParam(value = "sequenceNumber", defaultValue = "") Long sequenceNumber) {
         //Token validation
         UserAuthentication userAuthentication = new UserAuthentication();
