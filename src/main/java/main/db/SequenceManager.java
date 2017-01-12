@@ -3,39 +3,13 @@ package main.db;
 import main.models.Sequence;
 import main.models.SequenceList;
 
+import java.util.Date;
+
 /**
  * Created by brama on 1/11/17.
  */
 public class SequenceManager extends Database {
 
-    public SequenceList getSequenceList() {
-        /**
-         * Todo: Implement paging
-         */
-        SequenceList sequenceList = new SequenceList();
-        try {
-            String sql = "SELECT * FROM Sequences";
-            this.preparedStatement = this.connect.prepareStatement(sql);
-
-            this.resultSet = this.preparedStatement.executeQuery();
-
-            while (this.resultSet.next()) {
-                Sequence sequence = new Sequence();
-                sequence.setSequenceNumber(this.resultSet.getLong("sequence_number"));
-                sequence.setByUser(this.resultSet.getString("by_user"));
-                sequence.setPurpose(this.resultSet.getString("purpose"));
-                sequence.setDate(this.resultSet.getDate("date"));
-
-                sequenceList.addSequence(sequence);
-            }
-
-            return sequenceList;
-
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return null;
-        }
-    }
 
     public Sequence getSequence(Long sequenceNumber) {
         Sequence sequence = new Sequence();
@@ -62,8 +36,51 @@ public class SequenceManager extends Database {
 
     }
 
-    public void createSequence(Sequence sequence) {
+    public Sequence createSequence(Sequence sequence) {
 
+        if (this.getSequence(sequence.sequenceNumber).getSequenceNumber() > 0) {
+            System.out.println("Sequence already exists");
+            System.out.println(this.getSequence(sequence.sequenceNumber).toString());
+            //Sequence with that sequencNumber already exists
+            return this.getSequence(sequence.sequenceNumber);
+        }
+
+        try {
+            String sql = "INSERT INTO Sequences VALUES ( ?, ?, ?, ?)";
+            this.preparedStatement = this.connect.prepareStatement(sql);
+            this.preparedStatement.setLong(1, sequence.getSequenceNumber());
+            this.preparedStatement.setString(2, sequence.getByUser());
+            this.preparedStatement.setString(3, sequence.getPurpose());
+            this.preparedStatement.setDate(4, new java.sql.Date(sequence.getDate().getTime()));
+
+            this.preparedStatement.executeUpdate();
+            return sequence;
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return null;
+    }
+
+    public Long getNextAvailableSequenceNumber() {
+        Long nextSequence = new Long(0);
+        try {
+            String sql = "SELECT * FROM Sequences ORDER BY Sequences.sequence_number DESC LIMIT 1";
+            this.preparedStatement = this.connect.prepareStatement(sql);
+
+            this.resultSet = this.preparedStatement.executeQuery();
+
+            while (this.resultSet.next()) {
+                nextSequence = this.resultSet.getLong("sequence_number");
+                nextSequence++;
+            }
+
+            return nextSequence;
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return nextSequence;
+        }
     }
 
     public void updateSequence(Sequence sequence) {
@@ -74,34 +91,6 @@ public class SequenceManager extends Database {
 
     }
 
-    public SequenceList getSequencePage(int page, int itemsPerPage, String filter) {
-        SequenceList sequenceList = new SequenceList();
-        try {
-            String sql = "SELECT * FROM Sequences WHERE Sequences.by_user LIKE ? OR Sequences.purpose LIKE ? LIMIT ? OFFSET ?";
-            this.preparedStatement = this.connect.prepareStatement(sql);
-            this.preparedStatement.setString(1, "%" + filter + "%");
-            this.preparedStatement.setString(2, "%" + filter + "%");
-            this.preparedStatement.setInt(3, itemsPerPage);
-            this.preparedStatement.setInt(4, (page - 1) * itemsPerPage);
 
-            this.resultSet = this.preparedStatement.executeQuery();
-
-            while (this.resultSet.next()) {
-                Sequence sequence = new Sequence();
-                sequence.setSequenceNumber(this.resultSet.getLong("sequence_number"));
-                sequence.setByUser(this.resultSet.getString("by_user"));
-                sequence.setPurpose(this.resultSet.getString("purpose"));
-                sequence.setDate(this.resultSet.getDate("date"));
-                sequenceList.addSequence(sequence);
-            }
-
-            return sequenceList;
-
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return null;
-        }
-
-    }
 
 }
