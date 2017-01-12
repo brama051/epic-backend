@@ -1,6 +1,7 @@
 package main.services;
 
 import java.security.MessageDigest;
+import java.util.Random;
 
 /**
  * Created by brama on 1/11/17.
@@ -25,5 +26,17 @@ public class HashService {
 
 
         return "";
+    }
+
+    public String generateToken() {
+        String token = "";
+        String input = "";
+        Random randomGenerator = new Random();
+        for (int i = 1; i <= 10; ++i) {
+            input += Integer.toString(randomGenerator.nextInt(100000));
+        }
+        token = this.stringToMD5(input);
+
+        return token;
     }
 }
