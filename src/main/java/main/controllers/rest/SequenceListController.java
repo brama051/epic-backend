@@ -36,6 +36,9 @@ public class SequenceListController {
                                         @RequestParam(value = "page", defaultValue = "1") int page,
                                         @RequestParam(value = "itemsPerPage", defaultValue = "1") int itemsPerpage,
                                         @RequestParam(value = "filter", defaultValue = "") String filter) {
+        /**
+         * Todo: Add totalPages, currentPage, itemsPerPage and filter to the response JSON
+         */
         //Token validation
         UserAuthentication userAuthentication = new UserAuthentication();
         if (userAuthentication.getUserByToken(token) == "") {
