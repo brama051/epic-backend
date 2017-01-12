@@ -37,7 +37,9 @@ public class UserAuthentication extends Database {
             String sql = "UPDATE Users SET token = '' WHERE Users.token = ?";
             this.preparedStatement = this.connect.prepareStatement(sql);
             this.preparedStatement.setString(1, token);
-            return this.preparedStatement.executeUpdate(); // 0 for SQL statements that returns nothing
+            int result = this.preparedStatement.executeUpdate(); // 0 for SQL statements that returns nothing
+            System.out.println("Return status: " + result);
+            return result;
 
         } catch (Exception e) {
             System.out.println(e.toString());
@@ -46,9 +48,24 @@ public class UserAuthentication extends Database {
 
     }
 
-    public String validateUserToken(String token) {
+    public String getUserByToken(String token) {
+        String username = "";
+        try {
+            String sql = "SELECT * FROM Users WHERE Users.token = ?";
+            this.preparedStatement = this.connect.prepareStatement(sql);
+            this.preparedStatement.setString(1, token);
 
-        return "";
+            this.resultSet = this.preparedStatement.executeQuery();
+
+            while (this.resultSet.next()) {
+                username = this.resultSet.getString("name");
+                System.out.println("Validated user by token - Username: " + username);
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+
+        return username;
     }
 
     public String createToken(String username) {
