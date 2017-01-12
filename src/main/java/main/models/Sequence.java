@@ -6,30 +6,30 @@ import java.util.Date;
  * Created by brama on 1/12/17.
  */
 public class Sequence {
-    public int sequenceNumber;
+    public Long sequenceNumber;
     public String byUser;
     public String purpose;
     public Date date;
 
     public Sequence() {
-        this.sequenceNumber = -1;
+        this.sequenceNumber = new Long(-1);
         this.byUser = "";
         this.purpose = "";
         this.date = new Date();
     }
 
-    public Sequence(int sequenceNumber, String byUser, String purpose, Date date) {
+    public Sequence(Long sequenceNumber, String byUser, String purpose, Date date) {
         this.sequenceNumber = sequenceNumber;
         this.byUser = byUser;
         this.purpose = purpose;
         this.date = date;
     }
 
-    public int getSequenceNumber() {
+    public Long getSequenceNumber() {
         return sequenceNumber;
     }
 
-    public void setSequenceNumber(int sequenceNumber) {
+    public void setSequenceNumber(Long sequenceNumber) {
         this.sequenceNumber = sequenceNumber;
     }
 
