@@ -4,13 +4,11 @@ import main.db.SequenceListManager;
 import main.db.SequenceManager;
 import main.db.UserAuthentication;
 import main.models.Sequence;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/sequence")
 public class SequenceController {

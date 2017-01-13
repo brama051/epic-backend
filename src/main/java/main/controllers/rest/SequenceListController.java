@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.springframework.web.bind.annotation.*;
+
+
+@CrossOrigin
 @RestController
 @RequestMapping("/sequences")
 public class SequenceListController {

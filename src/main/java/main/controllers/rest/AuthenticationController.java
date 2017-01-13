@@ -6,6 +6,7 @@ import main.models.Token;
 import main.models.User;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 public class AuthenticationController {
 
