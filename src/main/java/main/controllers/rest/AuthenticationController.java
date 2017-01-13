@@ -2,16 +2,17 @@ package main.controllers.rest;
 
 import main.db.UserAuthentication;
 import main.models.AuthenticationResponse;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import main.models.User;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AuthenticationController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public AuthenticationResponse login(@RequestParam(value = "username", defaultValue = "") String username, @RequestParam(value = "password", defaultValue = "") String password) {
+    public AuthenticationResponse login(@RequestBody User user) {
+        String username = user.username;
+        String password = user.password;
+
         if (username.length() == 0 || password.length() == 0) {
             return new AuthenticationResponse("Lozinka i korisničko ime su obavezna polja.", "Error: Missing fields");
         }
