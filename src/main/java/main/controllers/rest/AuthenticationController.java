@@ -42,6 +42,7 @@ public class AuthenticationController {
         UserAuthentication userAuthentication = new UserAuthentication();
         if (userAuthentication.logoutUser(token.getToken()) > -1) {
             System.out.println("Successful logout");
+            userAuthentication.close();
             return new AuthenticationResponse("Uspješna odjava", "Success: Logout");
         }
 
