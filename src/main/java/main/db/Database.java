@@ -21,7 +21,7 @@ public class Database {
                     .getConnection("jdbc:mysql://" + System.getenv("MYSQL_URL") + "/" + System.getenv("MYSQL_DATABASE")
                             + "user=" + System.getenv("MYSQL_USER") + "&password=" + System.getenv("MYSQL_PASSWORD"));*/
             this.connect = DriverManager
-                    .getConnection("jdbc:mysql://" + System.getenv("MYSQL_URL") + "/" + System.getenv("MYSQL_DATABASE") + "?user=" + System.getenv("MYSQL_USER") + "&password=" + System.getenv("MYSQL_PASSWORD"));
+                    .getConnection("jdbc:mysql://" + System.getenv("MYSQL_URL") + "/" + System.getenv("MYSQL_DATABASE"), System.getenv("MYSQL_USER"), System.getenv("MYSQL_PASSWORD"));
         } catch (Exception e) {
             System.out.println(e.toString());
         }
