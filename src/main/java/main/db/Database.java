@@ -18,8 +18,8 @@ public class Database {
             Class.forName("com.mysql.jdbc.Driver");
             // Setup the connection with the DB
             this.connect = DriverManager
-                    .getConnection("jdbc:mysql://MYSQL_URL/MYSQL_DATABASE"
-                            + "user=MYSQL_USER&password=MYSQL_PASSWORD");
+                    .getConnection("jdbc:mysql://" + System.getenv("MYSQL_URL") + "/" + System.getenv("MYSQL_DATABASE"
+                            + "user=" + System.getenv("MYSQL_USER") + "&password=" + System.getenv("MYSQL_PASSWORD"));
         } catch (Exception e) {
             System.out.println(e.toString());
         }
