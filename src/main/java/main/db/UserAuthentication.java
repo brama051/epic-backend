@@ -38,7 +38,7 @@ public class UserAuthentication extends Database {
             this.preparedStatement = this.connect.prepareStatement(sql);
             this.preparedStatement.setString(1, token);
             int result = this.preparedStatement.executeUpdate(); // 0 for SQL statements that returns nothing
-            System.out.println("Return status: " + result);
+            //System.out.println("Return status: " + result); //This should return 1 but returns 0 - confusing
             return result;
 
         } catch (Exception e) {

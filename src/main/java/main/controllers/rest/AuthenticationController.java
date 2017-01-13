@@ -2,6 +2,7 @@ package main.controllers.rest;
 
 import main.db.UserAuthentication;
 import main.models.AuthenticationResponse;
+import main.models.Token;
 import main.models.User;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +14,10 @@ public class AuthenticationController {
         String username = user.username;
         String password = user.password;
 
-        if (username.length() == 0 || password.length() == 0) {
+        System.out.println("_" + username + "_");
+        System.out.println("_" + password + "_");
+
+        if (username == "" || password == "") {
             return new AuthenticationResponse("Lozinka i korisničko ime su obavezna polja.", "Error: Missing fields");
         }
 
@@ -32,9 +36,11 @@ public class AuthenticationController {
 
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    public AuthenticationResponse logout(@RequestParam(value = "token", defaultValue = "dummy") String token) {
+    public AuthenticationResponse logout(@RequestBody Token token) {
+        System.out.println("Token to delete: " + token.getToken());
         UserAuthentication userAuthentication = new UserAuthentication();
-        if (userAuthentication.logoutUser(token) == 1) {
+        if (userAuthentication.logoutUser(token.getToken()) > -1) {
+            System.out.println("Successful logout");
             return new AuthenticationResponse("Uspješna odjava", "Success: Logout");
         }
 
