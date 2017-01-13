@@ -18,8 +18,8 @@ public class Database {
             Class.forName("com.mysql.jdbc.Driver");
             // Setup the connection with the DB
             this.connect = DriverManager
-                    .getConnection("jdbc:mysql://sql7.freemysqlhosting.net/sql7152891?"
-                            + "user=sql7152891&password=2lfGA3yCas");
+                    .getConnection("jdbc:mysql://MYSQL_URL/MYSQL_DATABASE"
+                            + "user=MYSQL_USER&password=MYSQL_PASSWORD");
         } catch (Exception e) {
             System.out.println(e.toString());
         }
