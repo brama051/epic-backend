@@ -44,7 +44,7 @@ public class SequenceManager extends Database {
             //Sequence with that sequencNumber already exists
             return this.getSequence(sequence.sequenceNumber);
         }*/
-
+        System.out.println("############################################################");
         try {
             String sql = "INSERT INTO sequences (`sequence_number`, `by_user`, `purpose`) VALUES ( ?, ?, ?)";
             this.preparedStatement = this.connect.prepareStatement(sql);
@@ -52,11 +52,12 @@ public class SequenceManager extends Database {
             this.preparedStatement.setString(2, sequence.getByUser());
             this.preparedStatement.setString(3, sequence.getPurpose());
             //this.preparedStatement.setDate(4, new java.sql.Date(sequence.getDate().getTime()));
-
-            this.preparedStatement.executeUpdate();
+            int result = this.preparedStatement.executeUpdate();
+            System.out.println("############################################################" + result);
             return sequence;
 
         } catch (Exception e) {
+            System.out.println("############################################################");
             System.out.println(e.toString());
             return new Sequence(new Long(-1), "", e.toString(), new Date());
         }
