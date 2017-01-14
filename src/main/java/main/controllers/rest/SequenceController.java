@@ -59,7 +59,7 @@ public class SequenceController {
         //Check if requested sequence number is not taken in the meantime.
         if (nextAvailableSequenceNumber == sequenceNumber) {
             // save the requested sequence
-            sequenceManager.createSequence(newSequence);
+            //sequenceManager.createSequence(newSequence);
             sequenceManager.close();
             return newSequence;
         } else {
