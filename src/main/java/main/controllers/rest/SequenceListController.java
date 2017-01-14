@@ -40,10 +40,9 @@ public class SequenceListController {
     public SequenceList getSequencePage(@RequestParam(value = "token", defaultValue = "") String token,
                                         @RequestParam(value = "page", defaultValue = "1") int page,
                                         @RequestParam(value = "itemsPerPage", defaultValue = "1") int itemsPerpage,
-                                        @RequestParam(value = "filter", defaultValue = "") String filter) {
-        /**
-         * Todo: Add totalPages, currentPage, itemsPerPage and filter to the response JSON
-         */
+                                        @RequestParam(value = "filter", defaultValue = "") String filter,
+                                        @RequestParam(value = "orderBy", defaultValue = "") String orderBy) {
+
         //Token validation
         UserAuthentication userAuthentication = new UserAuthentication();
         if (userAuthentication.getUserByToken(token).equals("") || token.equals("")) {
@@ -52,7 +51,7 @@ public class SequenceListController {
         }
 
         SequenceListManager sequenceListManager = new SequenceListManager();
-        SequenceList sequenceList = sequenceListManager.getSequenceListPage(page, itemsPerpage, filter);
+        SequenceList sequenceList = sequenceListManager.getSequenceListPage(page, itemsPerpage, filter, orderBy);
         sequenceListManager.close();
 
         return sequenceList;

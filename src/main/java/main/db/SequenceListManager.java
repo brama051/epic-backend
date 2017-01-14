@@ -33,13 +33,31 @@ public class SequenceListManager extends Database {
         }
     }
 
-    public SequenceList getSequenceListPage(int page, int itemsPerPage, String filter) {
+    public SequenceList getSequenceListPage(int page, int itemsPerPage, String filter, String orderBy) {
         SequenceList sequenceList = new SequenceList();
         try {
-            String sql = "SELECT * FROM Sequences WHERE Sequences.by_user LIKE ? OR Sequences.purpose LIKE ? LIMIT ? OFFSET ?";
+            String column = "";
+            switch (orderBy) {
+                case "byUser":
+                    column = "sequences.by_user";
+                    break;
+                case "purpose":
+                    column = "sequences.purpose";
+                    break;
+                case "date":
+                    column = "sequences.date";
+                    break;
+                default:
+                    column = "sequences.sequence_number";
+                    break;
+
+            }
+
+            String sql = "SELECT * FROM Sequences WHERE Sequences.by_user LIKE ? OR Sequences.purpose LIKE ? ORDER BY " + column + " LIMIT ? OFFSET ?";
             this.preparedStatement = this.connect.prepareStatement(sql);
             this.preparedStatement.setString(1, "%" + filter + "%");
             this.preparedStatement.setString(2, "%" + filter + "%");
+
             this.preparedStatement.setInt(3, itemsPerPage);
             this.preparedStatement.setInt(4, (page - 1) * itemsPerPage);
 
