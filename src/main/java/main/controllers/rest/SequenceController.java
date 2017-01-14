@@ -51,6 +51,7 @@ public class SequenceController {
         //Check if user is the right one
         if (actualUser != newSequence.byUser) {
             newSequence.byUser = actualUser;
+            System.out.println("####### Users mismatch: " + actualUser + " : " + newSequence.byUser);
             return newSequence;
         }
         System.out.println("############################################################ Saving: Sequence [Passed]");
