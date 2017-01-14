@@ -46,12 +46,12 @@ public class SequenceManager extends Database {
         }*/
         System.out.println("############################################################");
         try {
-            String sql = "INSERT INTO sequences (`sequence_number`, `by_user`, `purpose`) VALUES ( ?, ?, ?)";
+            String sql = "INSERT INTO sequences VALUES ( ?, ?, ?, ?)";
             this.preparedStatement = this.connect.prepareStatement(sql);
             this.preparedStatement.setLong(1, sequence.getSequenceNumber());
             this.preparedStatement.setString(2, sequence.getByUser());
             this.preparedStatement.setString(3, sequence.getPurpose());
-            //this.preparedStatement.setDate(4, new java.sql.Date(sequence.getDate().getTime()));
+            this.preparedStatement.setDate(4, new java.sql.Date(sequence.getDate().getTime()));
             int result = this.preparedStatement.executeUpdate();
             System.out.println("############################################################" + result);
             return sequence;
