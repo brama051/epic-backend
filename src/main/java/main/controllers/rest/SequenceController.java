@@ -1,6 +1,5 @@
 package main.controllers.rest;
 
-import main.db.SequenceListManager;
 import main.db.SequenceManager;
 import main.db.UserAuthentication;
 import main.models.Sequence;
@@ -17,7 +16,7 @@ public class SequenceController {
     public Sequence getSequence(@RequestParam(value = "token", defaultValue = "") String token, @RequestParam(value = "sequenceNumber", defaultValue = "") Long sequenceNumber) {
         //Token validation
         UserAuthentication userAuthentication = new UserAuthentication();
-        if (userAuthentication.getUserByToken(token) == "" || token == "") {
+        if (userAuthentication.getUserByToken(token).equals("") || token.equals("")) {
             userAuthentication.close();
             return new Sequence();
 
@@ -43,33 +42,28 @@ public class SequenceController {
         //Token validation
         UserAuthentication userAuthentication = new UserAuthentication();
         String actualUser = userAuthentication.getUserByToken(token);
-        if (actualUser == "" || token == "") {
+        if (actualUser.equals("") || token.equals("")) {
             userAuthentication.close();
             return new Sequence();
         }
-        System.out.println("############################################################ Saving: Token validation [Passed]");
         //Check if user is the right one
         if (!newSequence.byUser.equals(actualUser)) {
             newSequence.byUser = actualUser;
-            System.out.println("####### Users mismatch: " + actualUser + " : " + newSequence.byUser);
+            userAuthentication.close();
             return newSequence;
         }
-        System.out.println("############################################################ Saving: Sequence [Passed]");
 
         //If everything is correct, continue with checking the requested sequenceNumber
         SequenceManager sequenceManager = new SequenceManager();
         Long nextAvailableSequenceNumber = sequenceManager.getNextAvailableSequenceNumber();
         //Check if requested sequence number is not taken in the meantime.
         if (nextAvailableSequenceNumber.equals(sequenceNumber)) {
-            System.out.println("############################################################ Saving: About to save...");
             // save the requested sequence
             Sequence savedSequence = sequenceManager.createSequence(newSequence);
-            System.out.println("############################################################ Saving: Saved [Passed]");
             sequenceManager.close();
             return savedSequence;
         } else {
             //return a sequence with a new sequence number
-            System.out.println("############################################################ Saving: Need bigger seq number [Exiting]");
             sequenceManager.close();
             return new Sequence(nextAvailableSequenceNumber, by_user, purpose, date);
         }
@@ -81,7 +75,7 @@ public class SequenceController {
         //Token validation
         UserAuthentication userAuthentication = new UserAuthentication();
         String username = userAuthentication.getUserByToken(token);
-        if (username == "" || token == "") {
+        if (username.equals("") || token.equals("")) {
             userAuthentication.close();
             return new Sequence();
         } else {

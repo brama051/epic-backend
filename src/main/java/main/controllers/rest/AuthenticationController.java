@@ -18,7 +18,7 @@ public class AuthenticationController {
         System.out.println("_" + username + "_");
         System.out.println("_" + password + "_");
 
-        if (username == "" || password == "") {
+        if (username.equals("") || password.equals("")) {
             return new AuthenticationResponse("Lozinka i korisničko ime su obavezna polja.", "Error: Missing fields");
         }
 
@@ -27,7 +27,7 @@ public class AuthenticationController {
             String token = "";
             token = userAuthentication.createToken(username);
             userAuthentication.close();
-            if (token != "") {
+            if (!token.equals("")) {
                 return new AuthenticationResponse(token, "Success: Login");
             }
         }
