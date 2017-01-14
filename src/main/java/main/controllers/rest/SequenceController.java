@@ -60,7 +60,7 @@ public class SequenceController {
         SequenceManager sequenceManager = new SequenceManager();
         Long nextAvailableSequenceNumber = sequenceManager.getNextAvailableSequenceNumber();
         //Check if requested sequence number is not taken in the meantime.
-        if (nextAvailableSequenceNumber == sequenceNumber) {
+        if (nextAvailableSequenceNumber.equals(sequenceNumber)) {
             System.out.println("############################################################ Saving: About to save...");
             // save the requested sequence
             Sequence savedSequence = sequenceManager.createSequence(newSequence);
