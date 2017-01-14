@@ -12,7 +12,7 @@ public class UserAuthentication extends Database {
     public int validateUser(String username, String password) {
         String hashedPassword = new HashService().stringToMD5(password);
         try {
-            String sql = "SELECT * FROM users WHERE users.name = ? AND users.pass_hash = ?";
+            String sql = "SELECT * FROM Users WHERE Users.name = ? AND Users.pass_hash = ?";
             this.preparedStatement = this.connect.prepareStatement(sql);
             this.preparedStatement.setString(1, username);
             this.preparedStatement.setString(2, hashedPassword);
@@ -34,7 +34,7 @@ public class UserAuthentication extends Database {
 
     public int logoutUser(String token) {
         try {
-            String sql = "UPDATE users SET token = '' WHERE users.token = ?";
+            String sql = "UPDATE Users SET token = '' WHERE Users.token = ?";
             this.preparedStatement = this.connect.prepareStatement(sql);
             this.preparedStatement.setString(1, token);
             int result = this.preparedStatement.executeUpdate(); // 0 for SQL statements that returns nothing
@@ -51,7 +51,7 @@ public class UserAuthentication extends Database {
     public String getUserByToken(String token) {
         String username = "";
         try {
-            String sql = "SELECT * FROM users WHERE users.token = ?";
+            String sql = "SELECT * FROM Users WHERE Users.token = ?";
             this.preparedStatement = this.connect.prepareStatement(sql);
             this.preparedStatement.setString(1, token);
 
@@ -71,7 +71,7 @@ public class UserAuthentication extends Database {
     public String createToken(String username) {
         String token = new HashService().generateToken();
         try {
-            String sql = "UPDATE users SET token = ? WHERE users.name = ?";
+            String sql = "UPDATE Users SET token = ? WHERE Users.name = ?";
             this.preparedStatement = this.connect.prepareStatement(sql);
             this.preparedStatement.setString(1, token);
             this.preparedStatement.setString(2, username);
