@@ -24,7 +24,8 @@ public class SequenceListController {
     public SequenceList getSequenceList(@RequestParam(value = "token", defaultValue = "") String token) {
         //Token validation
         UserAuthentication userAuthentication = new UserAuthentication();
-        if (userAuthentication.getUserByToken(token) == "") {
+        if (userAuthentication.getUserByToken(token) == "" || token == "") {
+            userAuthentication.close();
             return null;
         }
 
@@ -45,7 +46,8 @@ public class SequenceListController {
          */
         //Token validation
         UserAuthentication userAuthentication = new UserAuthentication();
-        if (userAuthentication.getUserByToken(token) == "") {
+        if (userAuthentication.getUserByToken(token) == "" || token == "") {
+            userAuthentication.close();
             return null;
         }
 
