@@ -58,8 +58,9 @@ public class SequenceManager extends Database {
 
         } catch (Exception e) {
             System.out.println(e.toString());
+            return new Sequence(new Long(-1), "", e.toString(), new Date());
         }
-        return null;
+
     }
 
     public Long getNextAvailableSequenceNumber() {

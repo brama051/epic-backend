@@ -59,9 +59,9 @@ public class SequenceController {
         //Check if requested sequence number is not taken in the meantime.
         if (nextAvailableSequenceNumber == sequenceNumber) {
             // save the requested sequence
-            sequenceManager.createSequence(newSequence);
+            Sequence savedSequence = sequenceManager.createSequence(newSequence);
             sequenceManager.close();
-            return newSequence;
+            return savedSequence;
         } else {
             //return a sequence with a new sequence number
             sequenceManager.close();
