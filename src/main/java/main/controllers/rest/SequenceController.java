@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/sequence")
 public class SequenceController {
@@ -37,7 +36,8 @@ public class SequenceController {
         //Token validation
         UserAuthentication userAuthentication = new UserAuthentication();
         if (userAuthentication.getUserByToken(token) == "") {
-            return null;
+            userAuthentication.close();
+            return new Sequence();
         }
 
         SequenceManager sequenceManager = new SequenceManager();
@@ -64,7 +64,8 @@ public class SequenceController {
         UserAuthentication userAuthentication = new UserAuthentication();
         String username = userAuthentication.getUserByToken(token);
         if (username == "") {
-            return null;
+            userAuthentication.close();
+            return new Sequence();
         } else {
             SequenceManager sequenceManager = new SequenceManager();
             Long nextAvailableSequenceNumber = sequenceManager.getNextAvailableSequenceNumber();
@@ -72,20 +73,21 @@ public class SequenceController {
         }
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    /*@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public String deleteSequence(@RequestParam(value = "token", defaultValue = "") String token,
                                  @RequestParam(value = "sequenceNumber", defaultValue = "0") Long sequenceNumber) {
 
         UserAuthentication userAuthentication = new UserAuthentication();
         String username = userAuthentication.getUserByToken(token);
         if (username == "") {
-            return null;
+            userAuthentication.close();
+            return "";
         } else {
             SequenceManager sequenceManager = new SequenceManager();
 
             return sequenceManager.deleteSequence(sequenceNumber);
         }
-    }
+    }*/
 
 
 }
