@@ -50,6 +50,7 @@ public class SequenceController {
         //Check if requested sequence number is not taken in the meantime.
         if (nextAvailableSequenceNumber > sequenceNumber) {
             //if it's taken, return a sequence with a new sequence number
+            sequenceManager.close();
             return new Sequence(nextAvailableSequenceNumber, by_user, purpose, date);
         } else {
             //else, save the requested sequence
