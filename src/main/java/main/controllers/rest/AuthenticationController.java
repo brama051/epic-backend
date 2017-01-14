@@ -15,8 +15,8 @@ public class AuthenticationController {
         String username = user.username;
         String password = user.password;
 
-        System.out.println("_" + username + "_");
-        System.out.println("_" + password + "_");
+        //System.out.println("_" + username + "_");
+        //System.out.println("_" + password + "_");
 
         if (username.equals("") || password.equals("")) {
             return new AuthenticationResponse("Lozinka i korisničko ime su obavezna polja.", "Error: Missing fields");
@@ -38,10 +38,10 @@ public class AuthenticationController {
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public AuthenticationResponse logout(@RequestBody Token token) {
-        System.out.println("Token to delete: " + token.getToken());
+        //System.out.println("Token to delete: " + token.getToken());
         UserAuthentication userAuthentication = new UserAuthentication();
         if (userAuthentication.logoutUser(token.getToken()) > -1) {
-            System.out.println("Successful logout");
+            //System.out.println("Successful logout");
             userAuthentication.close();
             return new AuthenticationResponse("Uspješna odjava", "Success: Logout");
         }
