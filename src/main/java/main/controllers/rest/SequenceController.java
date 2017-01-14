@@ -16,8 +16,10 @@ public class SequenceController {
     public Sequence getSequence(@RequestParam(value = "token", defaultValue = "") String token, @RequestParam(value = "sequenceNumber", defaultValue = "") Long sequenceNumber) {
         //Token validation
         UserAuthentication userAuthentication = new UserAuthentication();
-        if (userAuthentication.getUserByToken(token) == "") {
-            return null;
+        if (userAuthentication.getUserByToken(token) == "" || token == "") {
+            userAuthentication.close();
+            return new Sequence();
+
         }
 
         SequenceManager sequenceManager = new SequenceManager();
@@ -35,7 +37,7 @@ public class SequenceController {
                                    @RequestParam(value = "date", defaultValue = "") Date date) {
         //Token validation
         UserAuthentication userAuthentication = new UserAuthentication();
-        if (userAuthentication.getUserByToken(token) == "") {
+        if (userAuthentication.getUserByToken(token) == "" || token == "") {
             userAuthentication.close();
             return new Sequence();
         }
@@ -63,7 +65,7 @@ public class SequenceController {
         //Token validation
         UserAuthentication userAuthentication = new UserAuthentication();
         String username = userAuthentication.getUserByToken(token);
-        if (username == "") {
+        if (username == "" || token == "") {
             userAuthentication.close();
             return new Sequence();
         } else {
