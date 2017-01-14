@@ -30,11 +30,12 @@ public class SequenceController {
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.POST)
-    public Sequence createSequence(@RequestParam(value = "token", defaultValue = "") String token,
-                                   @RequestParam(value = "sequenceNumber", defaultValue = "") Long sequenceNumber,
-                                   @RequestParam(value = "by_user", defaultValue = "") String by_user,
-                                   @RequestParam(value = "purpose", defaultValue = "") String purpose,
-                                   @RequestParam(value = "date", defaultValue = "") Date date) {
+    public Sequence createSequence(@RequestParam(value = "token", defaultValue = "") String token, @RequestBody Sequence newSequence) {
+        Long sequenceNumber = newSequence.getSequenceNumber();
+        String by_user = newSequence.byUser;
+        String purpose = newSequence.purpose;
+        Date date = newSequence.date;
+
         //Token validation
         UserAuthentication userAuthentication = new UserAuthentication();
         if (userAuthentication.getUserByToken(token) == "" || token == "") {
@@ -71,6 +72,7 @@ public class SequenceController {
         } else {
             SequenceManager sequenceManager = new SequenceManager();
             Long nextAvailableSequenceNumber = sequenceManager.getNextAvailableSequenceNumber();
+            sequenceManager.close();
             return new Sequence(nextAvailableSequenceNumber, username, "", new Date());
         }
     }
