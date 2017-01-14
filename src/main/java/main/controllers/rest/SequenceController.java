@@ -49,7 +49,7 @@ public class SequenceController {
         }
         System.out.println("############################################################ Saving: Token validation [Passed]");
         //Check if user is the right one
-        if (actualUser != newSequence.byUser) {
+        if (newSequence.byUser.equals(actualUser)) {
             newSequence.byUser = actualUser;
             System.out.println("####### Users mismatch: " + actualUser + " : " + newSequence.byUser);
             return newSequence;
