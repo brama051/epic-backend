@@ -39,6 +39,7 @@ public class SequenceController {
         String purpose = newSequence.purpose;
         Date date = newSequence.date;
 
+
         //Token validation
         UserAuthentication userAuthentication = new UserAuthentication();
         String actualUser = userAuthentication.getUserByToken(token);
@@ -46,24 +47,28 @@ public class SequenceController {
             userAuthentication.close();
             return new Sequence();
         }
-
+        System.out.println("############################################################ Saving: Token validation [Passed]");
         //Check if user is the right one
         if (actualUser != newSequence.byUser) {
             newSequence.byUser = actualUser;
             return newSequence;
         }
+        System.out.println("############################################################ Saving: Sequence [Passed]");
 
         //If everything is correct, continue with checking the requested sequenceNumber
         SequenceManager sequenceManager = new SequenceManager();
         Long nextAvailableSequenceNumber = sequenceManager.getNextAvailableSequenceNumber();
         //Check if requested sequence number is not taken in the meantime.
         if (nextAvailableSequenceNumber == sequenceNumber) {
+            System.out.println("############################################################ Saving: About to save...");
             // save the requested sequence
             Sequence savedSequence = sequenceManager.createSequence(newSequence);
+            System.out.println("############################################################ Saving: Saved [Passed]");
             sequenceManager.close();
             return savedSequence;
         } else {
             //return a sequence with a new sequence number
+            System.out.println("############################################################ Saving: Need bigger seq number [Exiting]");
             sequenceManager.close();
             return new Sequence(nextAvailableSequenceNumber, by_user, purpose, date);
         }
