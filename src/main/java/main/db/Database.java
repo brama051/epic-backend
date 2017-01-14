@@ -33,11 +33,19 @@ public class Database {
             if (resultSet != null) {
                 this.resultSet.close();
             }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
 
+        try {
             if (statement != null) {
                 this.statement.close();
             }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
 
+        try {
             if (connect != null) {
                 this.connect.close();
             }
