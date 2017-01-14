@@ -10,7 +10,7 @@ public class SequenceListManager extends Database {
     public SequenceList getSequenceList() {
         SequenceList sequenceList = new SequenceList();
         try {
-            String sql = "SELECT * FROM Sequences";
+            String sql = "SELECT * FROM sequences";
             this.preparedStatement = this.connect.prepareStatement(sql);
 
             this.resultSet = this.preparedStatement.executeQuery();
