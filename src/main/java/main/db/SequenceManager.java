@@ -14,7 +14,7 @@ public class SequenceManager extends Database {
     public Sequence getSequence(Long sequenceNumber) {
         Sequence sequence = new Sequence();
         try {
-            String sql = "SELECT * FROM Sequences WHERE Sequences.sequence_number = ?";
+            String sql = "SELECT * FROM sequences WHERE sequences.sequence_number = ?";
             this.preparedStatement = this.connect.prepareStatement(sql);
             this.preparedStatement.setLong(1, sequenceNumber);
 
@@ -46,7 +46,7 @@ public class SequenceManager extends Database {
         }
 
         try {
-            String sql = "INSERT INTO Sequences VALUES ( ?, ?, ?, ?)";
+            String sql = "INSERT INTO sequences VALUES ( ?, ?, ?, ?)";
             this.preparedStatement = this.connect.prepareStatement(sql);
             this.preparedStatement.setLong(1, sequence.getSequenceNumber());
             this.preparedStatement.setString(2, sequence.getByUser());
@@ -65,7 +65,7 @@ public class SequenceManager extends Database {
     public Long getNextAvailableSequenceNumber() {
         Long nextSequence = new Long(0);
         try {
-            String sql = "SELECT * FROM Sequences ORDER BY Sequences.sequence_number DESC LIMIT 1";
+            String sql = "SELECT * FROM sequences ORDER BY sequences.sequence_number DESC LIMIT 1";
             this.preparedStatement = this.connect.prepareStatement(sql);
 
             this.resultSet = this.preparedStatement.executeQuery();
@@ -85,7 +85,7 @@ public class SequenceManager extends Database {
 
     /*public void updateSequence(Sequence sequence) {
         try {
-            String sql = "UPDATE Sequences SET  WHERE Users.name = ?";
+            String sql = "UPDATE sequences SET  WHERE Users.name = ?";
             this.preparedStatement = this.connect.prepareStatement(sql);
             this.preparedStatement.setLong(1, sequence.getSequenceNumber());
             this.preparedStatement.setString(2, sequence.getByUser());
@@ -102,7 +102,7 @@ public class SequenceManager extends Database {
 
     public String deleteSequence(Long sequenceNumber) {
         try {
-            String sql = "DELETE FROM Sequences WHERE Sequences.sequence_number = ? LIMIT 1";
+            String sql = "DELETE FROM sequences WHERE sequences.sequence_number = ? LIMIT 1";
             this.preparedStatement = this.connect.prepareStatement(sql);
             this.preparedStatement.setLong(1, sequenceNumber);
             // It should delete a single row and return "1"
