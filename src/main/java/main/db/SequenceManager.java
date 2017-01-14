@@ -38,20 +38,20 @@ public class SequenceManager extends Database {
 
     public Sequence createSequence(Sequence sequence) {
 
-        if (this.getSequence(sequence.sequenceNumber).getSequenceNumber() > 0) {
+        /*if (this.getSequence(sequence.sequenceNumber).getSequenceNumber() > 0) {
             System.out.println("Sequence already exists");
             System.out.println(this.getSequence(sequence.sequenceNumber).toString());
             //Sequence with that sequencNumber already exists
             return this.getSequence(sequence.sequenceNumber);
-        }
+        }*/
 
         try {
-            String sql = "INSERT INTO sequences VALUES ( ?, ?, ?)";
+            String sql = "INSERT INTO sequences VALUES ( ?, ?, ?, ?)";
             this.preparedStatement = this.connect.prepareStatement(sql);
             this.preparedStatement.setLong(1, sequence.getSequenceNumber());
             this.preparedStatement.setString(2, sequence.getByUser());
             this.preparedStatement.setString(3, sequence.getPurpose());
-            //this.preparedStatement.setDate(4, new java.sql.Date(sequence.getDate().getTime()));
+            this.preparedStatement.setDate(4, new java.sql.Date(sequence.getDate().getTime()));
 
             this.preparedStatement.executeUpdate();
             return sequence;
