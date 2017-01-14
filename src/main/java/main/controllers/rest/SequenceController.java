@@ -32,36 +32,41 @@ public class SequenceController {
 
     @RequestMapping(value = "/new", method = RequestMethod.POST)
     public Sequence createSequence(@RequestParam(value = "token", defaultValue = "") String token, @RequestBody Sequence newSequence) {
-        return newSequence;
+        //return newSequence;
 
-        /*Long sequenceNumber = newSequence.getSequenceNumber();
+        Long sequenceNumber = newSequence.getSequenceNumber();
         String by_user = newSequence.byUser;
         String purpose = newSequence.purpose;
         Date date = newSequence.date;
 
         //Token validation
         UserAuthentication userAuthentication = new UserAuthentication();
-        if (userAuthentication.getUserByToken(token) == "" || token == "") {
+        String actualUser = userAuthentication.getUserByToken(token);
+        if (actualUser == "" || token == "") {
             userAuthentication.close();
             return new Sequence();
         }
 
+        //Check if user is the right one
+        if (actualUser != newSequence.byUser) {
+            newSequence.byUser = actualUser;
+            return newSequence;
+        }
+
+        //If everything is correct, continue with checking the requested sequenceNumber
         SequenceManager sequenceManager = new SequenceManager();
         Long nextAvailableSequenceNumber = sequenceManager.getNextAvailableSequenceNumber();
-
         //Check if requested sequence number is not taken in the meantime.
-        if (nextAvailableSequenceNumber > sequenceNumber) {
-            //if it's taken, return a sequence with a new sequence number
+        if (nextAvailableSequenceNumber == sequenceNumber) {
+            // save the requested sequence
+            sequenceManager.createSequence(newSequence);
+            sequenceManager.close();
+            return newSequence;
+        } else {
+            //return a sequence with a new sequence number
             sequenceManager.close();
             return new Sequence(nextAvailableSequenceNumber, by_user, purpose, date);
-        } else {
-            //else, save the requested sequence
-            Sequence sequence;
-            sequence = new Sequence(sequenceNumber, by_user, purpose, date);
-            sequenceManager.createSequence(sequence);
-            sequenceManager.close();
-            return sequence;
-        }*/
+        }
 
     }
 
