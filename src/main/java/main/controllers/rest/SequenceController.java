@@ -32,7 +32,9 @@ public class SequenceController {
 
     @RequestMapping(value = "/new", method = RequestMethod.POST)
     public Sequence createSequence(@RequestParam(value = "token", defaultValue = "") String token, @RequestBody Sequence newSequence) {
-        Long sequenceNumber = newSequence.getSequenceNumber();
+        return newSequence;
+
+        /*Long sequenceNumber = newSequence.getSequenceNumber();
         String by_user = newSequence.byUser;
         String purpose = newSequence.purpose;
         Date date = newSequence.date;
@@ -59,7 +61,7 @@ public class SequenceController {
             sequenceManager.createSequence(sequence);
             sequenceManager.close();
             return sequence;
-        }
+        }*/
 
     }
 
